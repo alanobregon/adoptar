@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Recuperar contraseña</h1>
+<p>¿Olvidó su contraseña? Introduzca su dirección de email abajo y le enviaremos instrucciones para establecer una nueva.</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Recuperar contraseña</button>
+  </form>
+{% endblock content %}

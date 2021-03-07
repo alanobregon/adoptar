@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Introduzca nueva contraseña</h1>
+  <p>Por favor introduzca su nueva contraseña dos veces de manera que podamos verificar que la ha escrito correctamente.</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">cambiar mi contraseña</button>
+  </form>
+{% endblock content %}
