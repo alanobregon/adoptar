@@ -64,7 +64,7 @@ class Qualification(models.Model):
     from_user = models.ForeignKey(User, verbose_name="calificador", on_delete=models.SET_NULL, related_name="qualification_from_user", null=True, blank=True)
     to_user = models.ForeignKey(User, verbose_name="calificado", on_delete=models.CASCADE, related_name="qualification_to_user")
     score = models.SmallIntegerField(verbose_name="puntución")
-    created_at = models.DateField(verbose_name="creada", auto_now_add=True)
+    created_at = models.DateTimeField(verbose_name="creada", auto_now_add=True)
     comment = models.CharField("comentario", max_length=200, null=True, default=None)
     
 

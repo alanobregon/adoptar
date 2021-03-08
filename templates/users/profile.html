@@ -1,6 +1,25 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block content %}
   {{ profile.username }}
-  <a href="{% url 'users:password_change' %}" class="btn btn-primary">cambiar contraseña</a>
+  {% if user == profile %}
+    <a href="{% url 'users:password_change' %}" class="btn btn-primary">cambiar contraseña</a>
+    <a href="{% url 'users:update_profile' %}" class="btn btn-primary">actualizar perfil</a>
+  {% else %}
+    <a href="{% url 'users:profile_report' profile.username %}" class="btn btn-danger">Denunciar usuario</a>
+  {% endif %}
+
+  {% if profile.qualification_to_user.count != 0 %}
+    {% for qualification in profile.qualification_to_user.all %}
+      <p>Puntuacion: {{ qualification.score }}</p>
+      <p>{{ qualification.from_user }}</p>
+      <p>{{ qualification.comment }}</p>
+      <p>{{ qualification.created_at|naturaltime }}</p>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-primary" role="alert">
+      No existen calificaciones
+    </div>
+  {% endif %}
 {% endblock content %}

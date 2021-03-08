@@ -1,0 +1,170 @@
+[
+  {
+    "model": "users.Province",
+    "pk": 1,
+    "fields": {
+      "name": "Misiones"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 2,
+    "fields": {
+      "name": "San Luis"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 3,
+    "fields": {
+      "name": "San Juan"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 4,
+    "fields": {
+      "name": "Entre Ríos"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 5,
+    "fields": {
+      "name": "Santa Cruz"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 6,
+    "fields": {
+      "name": "Río Negro"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 7,
+    "fields": {
+      "name": "Chubut"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 8,
+    "fields": {
+      "name": "Córdoba"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 9,
+    "fields": {
+      "name": "Mendoza"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 10,
+    "fields": {
+      "name": "La Rioja"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 11,
+    "fields": {
+      "name": "Catamarca"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 12,
+    "fields": {
+      "name": "La Pampa"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 13,
+    "fields": {
+      "name": "Santiago del Estero"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 14,
+    "fields": {
+      "name": "Corrientes"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 15,
+    "fields": {
+      "name": "Santa Fe"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 16,
+    "fields": {
+      "name": "Tucumán"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 17,
+    "fields": {
+      "name": "Neuquén"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 18,
+    "fields": {
+      "name": "Salta"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 19,
+    "fields": {
+      "name": "Chaco"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 20,
+    "fields": {
+      "name": "Formosa"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 21,
+    "fields": {
+      "name": "Jujuy"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 22,
+    "fields": {
+      "name": "Ciudad Autónoma de Buenos Aires"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 23,
+    "fields": {
+      "name": "Buenos Aires"
+    }
+  },
+  {
+    "model": "users.Province",
+    "pk": 24,
+    "fields": {
+      "name": "Tierra del Fuego"
+    }
+  }
+]

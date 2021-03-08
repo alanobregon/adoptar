@@ -22,5 +22,11 @@ urlpatterns = [
     path("password_change/done", views.UserChangePasswordDoneView.as_view(), name="password_change_done"),
 
     # User Profile
+    path("update/", views.UserProfileUpdateView.as_view(), name="update_profile"),
     path("<str:slug>/", views.UserProfileView.as_view(), name="profile"),
+    path("<str:slug>/report", views.UserReportView.as_view(), name="profile_report"),
+    path("report/done", views.UserReportDoneView.as_view(), name="profile_report_done"),
+
+    # Ajax
+    path("ajax/load-cities", views.load_cities, name="ajax_load_cities"),
 ]

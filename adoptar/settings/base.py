@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # Libraries
     'widget_tweaks',
+    'django.contrib.humanize',
 
     # My apps
     'applications.users.apps.UsersConfig',
@@ -82,7 +83,7 @@ WSGI_APPLICATION = 'adoptar.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(os.path.dirname(BASE_DIR), 'db.sqlite3'),
     }
 }
 

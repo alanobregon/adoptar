@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <form method="post" data-cities-url="{% url 'users:ajax_load_cities' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Actualizar perfil</button>
+  </form>
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script>
+      $("#id_province").change(function (){
+        var url = $("#updateUser").attr("data-cities-url");
+        var provinceId = $(this).val();
+
+        $.ajax({
+          url: url,
+          data: {
+            'province': provinceId
+          },
+          success: function(data) {
+            $("#id_city").html(data)
+          }
+        });
+      });
+    </script>
+{% endblock js %}

@@ -1,0 +1,26 @@
+[
+  {
+    "model": "users.ReportReason",
+    "fields": {
+      "title": "Actividad ilegal"
+    }
+  },
+  {
+    "model": "users.ReportReason",
+    "fields": {
+      "title": "Spam"
+    }
+  },
+  {
+    "model": "users.ReportReason",
+    "fields": {
+      "title": "Suplantación de Identidad"
+    }
+  },
+  {
+    "model": "users.ReportReason",
+    "fields": {
+      "title": "Discriminación / odio"
+    }
+  }
+]
