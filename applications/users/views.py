@@ -105,6 +105,6 @@ class UserProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
 #AJAX
 def load_cities(request):
     province_id = request.GET.get('province')
-    cities = City.objects.filter(province=province_id).order_by('name')
+    cities = models.City.objects.filter(province=province_id).order_by('name')
     return render(request, 'users/cities_list_options.html', { 'cities': cities })
     
