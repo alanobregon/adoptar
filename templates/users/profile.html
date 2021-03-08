@@ -2,24 +2,112 @@
 {% load humanize %}
 
 {% block content %}
-  {{ profile.username }}
-  {% if user == profile %}
-    <a href="{% url 'users:password_change' %}" class="btn btn-primary">cambiar contraseña</a>
-    <a href="{% url 'users:update_profile' %}" class="btn btn-primary">actualizar perfil</a>
-  {% else %}
-    <a href="{% url 'users:profile_report' profile.username %}" class="btn btn-danger">Denunciar usuario</a>
-  {% endif %}
+  <div class="row">
+    <div class="col-md">
+      <div class="row mb-3">
+        <div class="col-md-4 text-center">
+          <img src="{{ profile.get_avatar }}" alt="Avatar" class="img-thumbnail mb-3">
 
-  {% if profile.qualification_to_user.count != 0 %}
-    {% for qualification in profile.qualification_to_user.all %}
-      <p>Puntuacion: {{ qualification.score }}</p>
-      <p>{{ qualification.from_user }}</p>
-      <p>{{ qualification.comment }}</p>
-      <p>{{ qualification.created_at|naturaltime }}</p>
-    {% endfor %}
-  {% else %}
-    <div class="alert alert-primary" role="alert">
-      No existen calificaciones
+          <div class="d-grid gap-2 mb-3">
+            {% if user == profile %}
+              <a href="{% url 'users:password_change' %}" class="btn btn-primary">Cambiar contraseña</a>
+              <a href="{% url 'users:update_profile' %}" class="btn btn-primary">Actualizar perfil</a>
+            {% else %}
+              <a href="{% url 'users:profile_report' profile.username %}" class="btn btn-danger">Denunciar usuario</a>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="col-md text-center">
+          <h1 class="display-2">{{ profile.get_full_name }}</h1>
+          <table class="table table-hover table-responsive table-borderless">
+            <tbody class="lead">
+              <tr>
+                <th>Nombre de usuario:</th>
+                <td>{{ profile.get_username }}</td>
+              </tr>
+              <tr>
+                <th>Email:</th>
+                <td>{{ profile.email }}</td>
+              </tr>
+              <tr>
+                <th>Provincia:</th>
+                <td>{{ profile.province }}</td>
+              </tr>
+              <tr>
+                <th>Ciudad:</th>
+                <td>
+                  {% if profile.city %}
+                    {{ profile.city }}
+                  {% else %}
+                    No especificado
+                  {% endif %}
+                </td>
+              </tr>
+              <tr>
+                <th>Usuario desde:</th>
+                <td>{{ profile.date_joined }}</td>
+              </tr>
+              <tr>
+                <th>Ultimo ingreso a la plataforma:</th>
+                <td>{{ profile.last_login|naturaltime }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md">
+          <h1 class="lead">Descripción</h1>
+          <hr>
+          <p class="lead mb-3">
+            {% if profile.description %}
+              {{ profile.description }}
+            {% else %}
+              {% if user == profile %}
+                ¡Cuentanos algo sobre ti!
+              {% else %}
+                Este usuario no tiene descripción
+              {% endif %}
+            {% endif %}
+          </p>
+        </div>
+      </div>
+
+      <hr>
     </div>
-  {% endif %}
+    <div class="col-md-3">
+      <h1 class="lead text-center mb-3">Ultimas calificaciones</h1>
+      {% if profile.qualification_to_user.count != 0 %}
+        {% for qualification in profile.qualification_to_user.all|dictsortreversed:'created_at'|slice:':3'%}
+          <div class="alert alert-primary" role="alert">
+            <h4 class="alert-heading">
+              <div class="row">
+                <div class="col text-start">{{ qualification.title }}</div>
+                <div class="col text-end">
+                  {{ qualification.score }}
+                  <i class="bi bi-star-fill"></i>
+                </div>
+              </div>
+            </h4>
+            <p>{{ qualification.comment }}</p>
+            <hr>
+            <div class="row">
+              <div class="col tex-start">
+                <a href="{% url 'users:profile' qualification.from_user.username %}" class="alert-link mb-0">{{ qualification.from_user }}</a>
+              </div>
+              <div class="col text-end">
+                <p class="mb-0">{{ qualification.created_at|naturaltime }}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="alert alert-primary" role="alert">
+          No existen calificaciones
+        </div>
+      {% endif %}
+    </div>
+  </div>
 {% endblock content %}

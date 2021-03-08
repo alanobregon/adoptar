@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Reinicio de contraseña completado</h1>
-  <p>Su contraseña ha sido cambiada. Ahora puede continuar e ingresar.</p>
-  <a href="{% url 'users:login' %}">Identificarse</a>
+  <div class="row justify-content-center">
+    <div class="col-md">
+      <h1 class="display-5 lead">Reinicio de contraseña completado</h1><hr>
+      <p class="lead">Su contraseña ha sido cambiada. Ahora puede continuar e ingresar.</p>
+      <a href="{% url 'users:login' %}">Identificarse</a>
+    </div>
+  </div>
 {% endblock content %}

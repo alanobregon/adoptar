@@ -45,8 +45,8 @@ class UserUpdateProfileForm(UserChangeForm):
             self.fields['city'].queryset = self.instance.province.city_set.order_by('name')
 
 class UserReportForm(forms.ModelForm):
-    reason = forms.ModelChoiceField(label="Razón", queryset=models.ReportReason.objects.all())
-    comment = forms.CharField(label="Descripción", max_length=200, required=True, widget=forms.Textarea())
+    reason = forms.ModelChoiceField(label="Razón", queryset=models.ReportReason.objects.all(), widget=forms.Select(attrs={'class':'form-select'}))
+    comment = forms.CharField(label="Descripción", max_length=200, required=True, widget=forms.Textarea(attrs={'class':'form-control', 'placeholder': 'Cuentanos que fue lo que sucedió'}))
     
     class Meta:
         model = models.UserReport
