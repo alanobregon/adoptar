@@ -48,3 +48,15 @@ class UserResetPasswordCompleteView(auth_views.PasswordResetCompleteView):
     template_name = 'users/reset_password/complete.html'
 
 # Change Password Views
+class UserChangePasswordView(auth_views.PasswordChangeView):
+    template_name = 'users/change_password/change.html'
+    success_url = reverse_lazy('users:password_change_done')
+
+class UserChangePasswordDoneView(auth_views.PasswordChangeDoneView):
+    template_name = 'users/change_password/done.html'
+
+class UserProfileView(generic.DetailView):
+    model = models.User
+    template_name = 'users/profile.html'
+    slug_field = 'username'
+    context_object_name = 'profile'

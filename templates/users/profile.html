@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {{ profile.username }}
+  <a href="{% url 'users:password_change' %}" class="btn btn-primary">cambiar contraseña</a>
+{% endblock content %}
