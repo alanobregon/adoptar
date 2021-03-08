@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Cambio de contraseña exitoso</h1>
-  <p>Su contraseña ha sido cambiada.</p>
-  <a href="{% url 'users:index' %}" class="btn btn-link">ir al inicio</a>
+  <div class="row justify-content-center">
+    <div class="col-md">
+      <h1 class="display-5 lead">Cambio de contraseña exitoso</h1><hr>
+      <p class="lead">Su contraseña ha sido cambiada.</p>
+      <a href="{% url 'users:profile' user.username %}">Ir a mi perfil</a>
+    </div>
+  </div>
 {% endblock content %}

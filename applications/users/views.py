@@ -89,6 +89,7 @@ class UserProfileView(LoginRequiredMixin, generic.DetailView):
     template_name = 'users/profile.html'
     slug_field = 'username'
     context_object_name = 'profile'
+    
 
 class UserProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = models.User

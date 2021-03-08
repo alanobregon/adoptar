@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-  <p>Gracias su denuncia fue enviada y sera revisada por el staff</p>
-  <a href="{% url 'users:index' %}" class="btn btn-link">ir al inicio</a>
+  <div class="row justify-content-center">
+    <div class="col-md">
+      <h1 class="display-5 lead">Denuncia enviada</h1><hr>
+      <p class="lead">Gracias! Su denuncia fue enviada y será revisada por el staff.</p>
+      <a href="{% url 'users:index' %}">Ir al inicio</a>
+    </div>
+  </div>
 {% endblock content %}
