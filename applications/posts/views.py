@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.urls import reverse_lazy
 
 from . import models, forms
@@ -37,6 +37,13 @@ class PostDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "posts/detail.html"
     context_object_name = 'post'
 
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        cancel_status = models.PostStatus.objects.get(status="Cancelada")
+        if self.object.status == cancel_status and self.object.author == request.user:
+            return super().dispatch(request, *args, **kwargs)
+        return redirect('posts:index')
+
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
     model = models.Post
@@ -59,9 +66,35 @@ class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.author == request.user:
+        cancel_status = models.PostStatus.objects.get(status="Cancelada")
+        if self.object.author == request.user and self.object.status != cancel_status:
             return super().dispatch(request, *args, **kwargs)
         return redirect('posts:index')
 
     def get_success_url(self):
         return reverse_lazy('posts:detail', kwargs={'pk':self.object.pk})
+
+class PostCancelDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = models.Post
+    template_name = "posts/cancel.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        cancel_status = models.PostStatus.objects.get(status="Cancelada")
+        if self.object.author == request.user and self.object.status != cancel_status:
+            return super().dispatch(request, *args, **kwargs)
+        return redirect('posts:index')
+
+    def get_success_url(self):
+        return reverse_lazy('posts:detail', kwargs={'pk':self.object.pk})
+
+    def delete(self, *args, **kwargs):
+        cancel_status = models.PostStatus.objects.get(status="Cancelada")
+        cancel_comment = self.request.POST['comment']
+        self.object = self.get_object()
+
+        self.object.cancel_comment = cancel_comment
+        self.object.status = cancel_status
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
