@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="row">
+        <div class="col-md mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="display-6 lead text-center">Nueva publicación</h4><hr>
+
+              <div class="form-group mb-3">
+                <label for="{{ form.title.id_for_label }}" class="form-label lead">{{ form.title.label }}:</label>
+                {{ form.title|add_class:'form-control' }}
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="{{ form.pet_name.id_for_label }}" class="form-label lead">Mascota:</label>
+                <div class="input-group">
+                  {{ form.pet_name|add_class:'form-control' }}
+                  {{ form.pet_age|add_class:'form-control' }}
+                </div>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="{{ form.photo.id_for_label }}" class="form-label lead">{{ form.photo.label }}:</label>
+                {{ form.photo|add_class:'form-control' }}
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="{{ form.description.id_for_label }}" class="form-label lead">{{ form.description.label }}:</label>
+                {{ form.description|add_class:'form-control' }}
+                 <div id="charNum" class="form-text">5000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="lead text-center">Categoria</h4><hr>
+              {% for cat in form.category %}
+                <div class="d-grid gap-2 mb-2">
+                  {{ cat.tag }}
+                  <label class="btn btn-outline-primary" for="{{ cat.id_for_label }}">{{ cat.choice_label }}</label>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="card border-0">
+            <div class="card-body">
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="submit">Actualizar publicación</button>
+                <a href="{% url 'posts:index' %}" class="btn btn-link" type="button">Cancelar</a>
+              </div>
+            </div>
+          </div>
+
+          {% if form.errors %}
+            {% for field in form %}
+              {% for error in field.errors %}
+                <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+                </div>
+              {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+              <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock content %}
+{% block js %}
+  <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+  <script>
+    function countChar(val) {
+      var len = val.value.length;
+      if (len >= 5000) {
+        val.value = val.value.substring(0, 5000);
+      } else {
+        $('#charNum').text(5000 - len);
+      }
+    };
+  </script>
+{% endblock js %}
