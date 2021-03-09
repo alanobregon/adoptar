@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # My apps
     'applications.users.apps.UsersConfig',
+    'applications.posts.apps.PostsConfig',
 ]
 
 MIDDLEWARE = [
@@ -135,8 +136,8 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
 # Django Auth configuration
 AUTH_USER_MODEL = 'users.User'
 
-LOGIN_REDIRECT_URL = reverse_lazy('users:index')
-LOGOUT_REDIRECT_URL = reverse_lazy('users:index')
+LOGIN_REDIRECT_URL = reverse_lazy('posts:index')
+LOGOUT_REDIRECT_URL = reverse_lazy('posts:index')
 
 #SMTP Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

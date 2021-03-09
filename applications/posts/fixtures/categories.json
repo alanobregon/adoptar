@@ -1,0 +1,50 @@
+[
+  {
+    "model": "posts.Category",
+    "fields": {
+      "name": "Perros"
+    }
+  },
+  {
+    "model": "posts.Category",
+    "fields": {
+      "name": "Gatos"
+    }
+  },
+  {
+    "model": "posts.Category",
+    "fields": {
+      "name": "Tortugas"
+    }
+  },
+  {
+    "model": "posts.Category",
+    "fields": {
+      "name": "Hurones"
+    }
+  },
+  {
+    "model": "posts.Category",
+    "fields": {
+      "name": "Peces"
+    }
+  },
+  {
+    "model": "posts.Category",
+    "fields": {
+      "name": "Caballos"
+    }
+  },
+  {
+    "model": "posts.Category",
+    "fields": {
+      "name": "Aves"
+    }
+  },
+  {
+    "model": "posts.Category",
+    "fields": {
+      "name": "Otros"
+    }
+  }
+]

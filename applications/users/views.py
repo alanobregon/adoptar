@@ -8,10 +8,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from . import models
 from . import forms
 
-# Create your views here.
-def index(request):
-    return render(request, 'posts/index.html')
-
 # Login Views
 class UserLoginView(auth_views.LoginView):
     template_name = 'users/login.html'
@@ -25,11 +21,11 @@ class UserRegisterCreateView(generic.CreateView):
     model = models.User
     form_class = forms.UserRegiterForm
     template_name = "users/register.html"
-    success_url = reverse_lazy('users:index')
+    success_url = reverse_lazy('posts:index')
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('users:index')
+            return redirect('posts:index')
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):

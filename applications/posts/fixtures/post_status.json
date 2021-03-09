@@ -1,0 +1,26 @@
+[
+  {
+    "model": "posts.PostStatus",
+    "fields": {
+      "status": "Activa"
+    }
+  },
+  {
+    "model": "posts.PostStatus",
+    "fields": {
+      "status": "Finalizada"
+    }
+  },
+  {
+    "model": "posts.PostStatus",
+    "fields": {
+      "status": "Suspendida"
+    }
+  },
+  {
+    "model": "posts.PostStatus",
+    "fields": {
+      "status": "Cancelada"
+    }
+  }
+]

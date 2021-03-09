@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-9">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="display-6 lead">{{ post.title }}</h5>
+          <h6 class="lead">Creado por: <a href="{% url 'users:profile' post.author.username %}">{{ post.author }}</a></h6><hr>
+          {{ post.description|linebreaks }}<hr>
+          <p class="card-text text-muted text-end">Creada {{ post.created_at|naturaltime }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <img src="{{ post.get_photo }}" alt="" class="img-thumbnail mb-3">
+
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          {% if user == post.author %}
+            <a href="{% url 'posts:update' post.id %}" class="btn btn-outline-primary" type="button">Editar publicación</a>
+
+            {% if post.status.status == 'Activa' %}
+              <button class="btn btn-outline-secondary" type="button">Suspender publicación</button>
+            {% elif post.status.status == 'Suspendida' %}
+              <button class="btn btn-outline-primary" type="button">Activar publicación</button>
+            {% endif %}
+
+            <button class="btn btn-outline-danger" type="button">Cancelar publicación</button>
+          {% else %}
+            <a href="#  " class="btn btn-outline-primary" type="button">Postularme</a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="row text-center">
+        <table class="table-boderless table-responsive">
+          <tbody>
+            <tr>
+              <td class="lead">{{ post.pet_name }}</td>
+            </tr>
+            <tr>
+              <td class="lead">{{ post.pet_age }} años (aprox.)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row text-center">
+        <div class="card border-0">
+          <div class="card-body">
+            <p class="lead">Categoria: <a href="#">{{ post.category }}</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

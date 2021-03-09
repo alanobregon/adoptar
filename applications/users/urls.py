@@ -5,8 +5,6 @@ from . import views
 
 app_name = "users"
 urlpatterns = [
-    path("", views.index, name="index"),
-
     path("register/", views.UserRegisterCreateView.as_view(), name="register"),
     path("login/", views.UserLoginView.as_view(), name="login"),
     path("logout/", views.UserLogoutView.as_view(), name="logout"),
@@ -19,13 +17,13 @@ urlpatterns = [
 
     # Password Change urls
     path("password_change/", views.UserChangePasswordView.as_view(), name="password_change"),
-    path("password_change/done", views.UserChangePasswordDoneView.as_view(), name="password_change_done"),
+    path("password_change/done/", views.UserChangePasswordDoneView.as_view(), name="password_change_done"),
 
     # User Profile
     path("update/", views.UserProfileUpdateView.as_view(), name="update_profile"),
     path("<str:slug>/", views.UserProfileView.as_view(), name="profile"),
-    path("<str:slug>/report", views.UserReportView.as_view(), name="profile_report"),
-    path("report/done", views.UserReportDoneView.as_view(), name="profile_report_done"),
+    path("<str:slug>/report/", views.UserReportView.as_view(), name="profile_report"),
+    path("report/done/", views.UserReportDoneView.as_view(), name="profile_report_done"),
 
     # Ajax
     path("ajax/load-cities", views.load_cities, name="ajax_load_cities"),
