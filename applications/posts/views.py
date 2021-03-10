@@ -37,18 +37,6 @@ class PostDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = "posts/detail.html"
     context_object_name = 'post'
 
-    def dispatch(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        cancel_status = models.PostStatus.objects.get(status="Cancelada")
-        active_status = models.PostStatus.objects.get(status="Activa")
-
-        if  self.object.status == active_status:
-            return super().dispatch(request, *args, **kwargs)
-        elif self.object.status == cancel_status and self.object.author == request.user:
-            return super().dispatch(request, *args, **kwargs)
-        return redirect('posts:index')
-
-
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
     model = models.Post
     form_class = forms.CreatePostForm
@@ -65,7 +53,7 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
 
 class PostUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = models.Post
-    form_class = forms.CreatePostForm
+    form_class = forms.ChangePostStatusForm
     template_name = "posts/update.html"
 
     def dispatch(self, request, *args, **kwargs):
