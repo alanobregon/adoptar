@@ -40,7 +40,11 @@ class PostDetailView(LoginRequiredMixin, generic.DetailView):
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         cancel_status = models.PostStatus.objects.get(status="Cancelada")
-        if self.object.status == cancel_status and self.object.author == request.user:
+        active_status = models.PostStatus.objects.get(status="Activa")
+
+        if  self.object.status == active_status:
+            return super().dispatch(request, *args, **kwargs)
+        elif self.object.status == cancel_status and self.object.author == request.user:
             return super().dispatch(request, *args, **kwargs)
         return redirect('posts:index')
 
