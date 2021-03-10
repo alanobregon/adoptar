@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="display-6 lead text-center">Cancelar publicación</h4><hr>
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+              <label for="comment" class="form-label lead">Comentario:</label>
+              <textarea name="comment" id="comment" cols="30" rows="10" class="form-control" placeholder="Comentanos por que cancelas esta publicación"></textarea>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-danger">Cancelar publicación</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

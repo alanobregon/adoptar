@@ -41,7 +41,7 @@
         </div>
 
         <div class="col-md-3 mb-3">
-          <div class="card">
+          <div class="card mb-3">
             <div class="card-body">
               <h4 class="lead text-center">Categoria</h4><hr>
               {% for cat in form.category %}
@@ -49,6 +49,19 @@
                   {{ cat.tag }}
                   <label class="btn btn-outline-primary" for="{{ cat.id_for_label }}">{{ cat.choice_label }}</label>
                 </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h4 class="lead text-center">Estado</h4><hr>
+
+              {% for s in form.status %}
+                <div class="d-grid gap-2 mb-2">
+                  {{ s.tag }}
+                  <label class="btn btn-outline-primary" for="{{ s.id_for_label }}">{{ s.choice_label }}</label>
+                </div>                
               {% endfor %}
             </div>
           </div>
