@@ -74,6 +74,8 @@ python manage.py migrate
 
 ```
 
+
+# Importante
 ## Seeds
 Ejecutar las siguientes seeds para cargar datos.
 ```

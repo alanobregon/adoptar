@@ -46,3 +46,15 @@ class ChangePostStatusForm(forms.ModelForm):
             'pet_age',
             'status'
         }
+
+class PostulateToPostForm(forms.ModelForm):
+    comment = forms.CharField(label="Comentario", max_length=1000, required=True, widget=forms.Textarea(attrs={
+        'placeholder':'Escribe un comentario',
+        'rows':5,
+        'class':'form-control'
+    }))
+    class Meta:
+        model = models.Postulation
+        fields = {
+            'comment'
+        }

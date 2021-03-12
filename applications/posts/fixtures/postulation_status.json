@@ -1,0 +1,26 @@
+[
+  {
+    "model": "posts.PostulationStatus",
+    "fields": {
+      "status": "En evaluación"
+    }
+  },
+  {
+    "model": "posts.PostulationStatus",
+    "fields": {
+      "status": "Aprobada"
+    }
+  },
+  {
+    "model": "posts.PostulationStatus",
+    "fields": {
+      "status": "Desaprobada"
+    }
+  },
+  {
+    "model": "posts.PostulationStatus",
+    "fields": {
+      "status": "Cancelada"
+    }
+  }
+]
