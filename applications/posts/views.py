@@ -19,12 +19,19 @@ class PostListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = models.Category.objects.all()
+        context["not_found_post_message"] = "No existen publicaciones activas."
         return context
 
 class CurrentUserPostListView(LoginRequiredMixin, PostListView):
     def get_queryset(self):
         current_user = self.request.user
         return models.Post.objects.filter(author=current_user).order_by('-update_at')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = models.Category.objects.all()
+        context["not_found_post_message"] = "No tienes publicaciones activas."
+        return context
 
 class SearchPostByCategoryListView(PostListView):
     def get_queryset(self):
@@ -89,4 +96,42 @@ class PostCancelDeleteView(LoginRequiredMixin, generic.DeleteView):
         self.object.status = cancel_status
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+class PostulationListView(LoginRequiredMixin, generic.ListView):
+    model = models.Postulation
+    template_name = "posts/postulations/index.html"
+    context_object_name = 'postulations'
+    paginate_by = 10
+
+    def get_queryset(self):
+        user = self.request.user
+        return models.Postulation.objects.filter(candidate=user).order_by('-created_at')
+
+class PostulateToPostCreateView(LoginRequiredMixin, generic.CreateView):
+    model = models.Postulation
+    form_class = forms.PostulateToPostForm
+    template_name = "posts/postulations/postulate.html"
+    success_url = reverse_lazy('posts:postulation_done')
+
+    def dispatch(self, request, *args, **kwargs):
+        post = models.Post.objects.get(pk=self.kwargs['pk'])
+        current_user = self.request.user
+        if post.author != current_user:
+            return super().dispatch(request, *args, **kwargs)
+        return redirect('posts:index')
+
+    def form_valid(self, form):
+        user = self.request.user
+        evaluation = models.PostulationStatus.objects.get(status="En evaluación")
+        post = models.Post.objects.get(pk=self.kwargs['pk'])
+
+        form.instance.candidate = user
+        form.instance.status = evaluation
+        form.instance.post = post
+
+        return super(PostulateToPostCreateView, self).form_valid(form)
+
+class PostulationDoneTemplateView(LoginRequiredMixin, generic.base.TemplateView):
+    template_name = 'posts/postulations/done.html'
+
 
