@@ -19,12 +19,9 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from django.views.generic.base import RedirectView
-
 urlpatterns = [
-    path("", RedirectView.as_view(url="posts/", permanent=False)),
-
     path('admin/', admin.site.urls),
-    path('posts/', include('applications.posts.urls')),
+    path('', include('applications.posts.urls')),
+    path('chats/', include('applications.chats.urls')),
     path('accounts/', include('applications.users.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -16,7 +16,7 @@
     {% block title %}{% endblock %}
   </title>
 </head>
-<body>
+<body class="bg-light">
   <!-- Nav -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
@@ -34,10 +34,10 @@
               <a class="nav-link" href="{% url 'posts:my_publications' %}">Mis publicaciones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Mis postulaciones</a>
+              <a class="nav-link" href="{% url 'posts:my_postulations' %}">Mis postulaciones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Mensajes</a>
+              <a class="nav-link" href="{% url 'chats:index' %}">Mensajes</a>
             </li>
           {% endif %}
         </ul>
