@@ -11,7 +11,7 @@ class ChatListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'chats'
 
     def get_queryset(self):
-        return models.Chat.objects.filter(participants=self.request.user)
+        return models.Chat.objects.filter(participants=self.request.user).order_by('-id')
 
 class ChatDetailView(LoginRequiredMixin, generic.DetailView):
     model = models.Chat
@@ -20,7 +20,9 @@ class ChatDetailView(LoginRequiredMixin, generic.DetailView):
 
     def dispatch(self, request, *args, **kwargs):
         chat = self.get_object()
-        if self.request.user in chat.participants.all():
+        evaluation = 'En evaluación'
+
+        if chat.postulation.status.status == evaluation and self.request.user in chat.participants.all():
             return super().dispatch(request, *args, **kwargs)
         return redirect('chats:index')
 

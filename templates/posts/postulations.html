@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Postulaciones{% endblock title %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="display-6 text-center">Postulaciones</h4><hr>
+          {% if postulations %}
+            {% for p in postulations %}
+              <div class="alert alert-primary">
+                <h4 class="alert-heading">{{ p.candidate }}</h4>
+                <p>{{ p.comment }}</p><hr>
+
+                <div class="row">
+                  <div class="col text-start">
+                    <p class="mb-0">{{ p.status }} / Creada {{ p.created_at|naturaltime }}</p>
+                  </div>
+                  <div class="col text-end">
+                    {% if user in p.chat.participants.all %}
+                      <a href="{% url 'chats:details' p.chat.id %}">Ver mensajes</a>
+                    {% endif %}
+                    
+                    {% if p.status.status == 'En evaluación' %}
+                      {% if p.post.author == user %}
+                        <a href="{% url 'posts:approve_postulation' p.id %}">Aprobar</a>
+                        <a href="#">Desaprobar</a>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="alert alert-primary">
+              No existen postulaciones
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

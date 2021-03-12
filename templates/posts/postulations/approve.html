@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Aprobar postulación{% endblock title %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="display-6 text-center">¿Aprobar esta postulación?</h4><hr>
+
+          <div class="row justify-content-center">
+            <div class="card mb-3 text-center" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">{{ postulation.candidate }}</h5>
+                <p class="card-text">{{ postulation.comment }}</p>
+              </div>
+            </div>
+          </div>
+
+          <form method="post">
+            {% csrf_token %}
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary">Confirmar</button>
+              <a href="{% url 'posts:index' %}" type="button" class="btn btn-secondary">Cancelar</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
