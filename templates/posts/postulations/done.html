@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Postulación enviada{% endblock title %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="lead display-5">Postulación enviada</h4><hr>
+          <p class="lead">
+            Tu postulación fue enviada correctamente. Ahora tendras acceso a un chat con el creador de la publicación.
+            En donde podrás demostrar la razón de porque quieres adoptar a esta mascota.
+          </p>
+
+          <a class="lead" href="{% url 'posts:my_postulations' %}">Ir a mis postulaciones</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

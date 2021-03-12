@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Mis postulaciones{% endblock title %}
+{% block content %}
+  <div class="row justify content-center">
+    <div class="col-md-9">
+      <div class="card border-0">
+        <div class="card-body">
+          <h4 class="lead">Mis postulaciones</h4><hr>
+
+          {% if postulations %}
+            {% for p in postulations %}
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <a href="{% url 'posts:detail' p.post.id %}" class="nav-link lead">{{ p.post }}</a>
+                    </div>
+                    <div class="col-2 text-end">
+                      <div class="row">
+                        <div class="col">
+                          <a href="#" class="nav-link lead">
+                            <i class="bi bi-chat"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div> <hr>
+
+                  <p class="lead">{{ p.comment }}</p><hr>
+                  <div class="row text-muted">
+                    <div class="col">
+                      <div class="lead">{{ p.status }}</div>
+                    </div>
+                    <div class="col text-end lead">{{ p.created_at|naturaltime }}</div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="alert alert-primary" role="alert">
+              No tienes ninguna postulación
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="card border-0 text-center">
+        <div class="card-body">
+          <nav aria-label="paginations">
+            <ul class="pagination justify-content-center">
+              {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo;</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+              {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+              {% endif %}
+
+              <li class="page-item active" aria-current="page">
+                <a href="#" class="page-link">{{ page_obj.number }}</a>
+              </li>
+
+              {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a></li>
+              {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
