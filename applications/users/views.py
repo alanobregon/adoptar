@@ -98,6 +98,24 @@ class UserProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         return reverse_lazy('users:profile', kwargs={'slug': self.request.user.username})
 
+class CalificateUserCreateView(LoginRequiredMixin, generic.CreateView):
+    model = models.User
+    form_class = forms.CalificateUserForm
+    template_name = 'users/calificate.html'
+    slug_field = 'username'
+
+    def get_success_url(self):
+        return reverse_lazy('users:profile', kwargs={'slug': self.kwargs['slug']})
+
+    def form_valid(self, form):
+        from_user = self.request.user
+        to_user = models.User.objects.get(username=self.kwargs['slug'])
+
+        form.instance.from_user = from_user
+        form.instance.to_user = to_user
+
+        return super(CalificateUserCreateView, self).form_valid(form)
+
 #AJAX
 def load_cities(request):
     province_id = request.GET.get('province')

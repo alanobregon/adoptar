@@ -12,20 +12,67 @@
           <div class="list-group">
             {% if chats %}
               {% for chat in chats %}
-                <a href="{% url 'chats:details' chat.id %}" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{ chat.postulation.post.title }}</h5>
-                    <small>{{ chat.messages.all.last.created_at|naturaltime }}</small>
-                  </div>
+                {% if chat.postulation.status.status == 'En evaluación' %}
+                  <a href="{% url 'chats:details' chat.id %}" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-1">{{ chat.postulation.post.title }}</h5>
+                      <small>{{ chat.messages.all.last.created_at|naturaltime }}</small>
+                    </div>
 
-                  {% if chat.messages.all.last %}
-                    <p class="mb-1">{{ chat.messages.all.last }}</p>
-                  {% else %}
-                    <small class="mb-1">¡Inicia la conversación!</small>
-                  {% endif %}
+                    {% if chat.messages.all.last %}
+                      <p class="mb-1">{{ chat.messages.all.last }}</p>
+                    {% else %}
+                      <small class="mb-1">¡Inicia la conversación!</small>
+                    {% endif %}
 
-                  <small>{{ chat.messages.all.last.sender }}</small>
-                </a>
+                    <small>{{ chat.messages.all.last.sender }}</small>
+                  </a>
+                {% elif chat.postulation.status.status == 'Aprobada' %}
+                  <button class="list-group-item list-group-item-action" disabled>
+                    <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-1">{{ chat.postulation.post.title }} <span class="badge bg-success">Aprobada</span></h5>
+                      <small>{{ chat.messages.all.last.created_at|naturaltime }}</small>
+                    </div>
+
+                    {% if chat.messages.all.last %}
+                      <p class="mb-1">{{ chat.messages.all.last }}</p>
+                    {% else %}
+                      <small class="mb-1">¡Inicia la conversación!</small>
+                    {% endif %}
+
+                    <small>{{ chat.messages.all.last.sender }}</small>
+                  </button>
+                {% elif chat.postulation.status.status == 'Desaprobada' %}
+                  <button class="list-group-item list-group-item-action" disabled>
+                    <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-1">{{ chat.postulation.post.title }} <span class="badge bg-warning">Desaprobada</span></h5>
+                      <small>{{ chat.messages.all.last.created_at|naturaltime }}</small>
+                    </div>
+
+                    {% if chat.messages.all.last %}
+                      <p class="mb-1">{{ chat.messages.all.last }}</p>
+                    {% else %}
+                      <small class="mb-1">¡Inicia la conversación!</small>
+                    {% endif %}
+
+                    <small>{{ chat.messages.all.last.sender }}</small>
+                  </button>
+                {% elif chat.postulation.status.status == 'Cancelada' %}
+                  <button class="list-group-item list-group-item-action" disabled>
+                    <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-1">{{ chat.postulation.post.title }} <span class="badge bg-danger">Cancelada</span></h5>
+                      <small>{{ chat.messages.all.last.created_at|naturaltime }}</small>
+                    </div>
+
+                    {% if chat.messages.all.last %}
+                      <p class="mb-1">{{ chat.messages.all.last }}</p>
+                    {% else %}
+                      <small class="mb-1">¡Inicia la conversación!</small>
+                    {% endif %}
+
+                    <small>{{ chat.messages.all.last.sender }}</small>
+                  </button>
+                {% endif %}
               {% endfor %}
             {% else %}
               <ul class="list-group">

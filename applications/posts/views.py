@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, reverse
 from django.urls import reverse_lazy
 
 from . import models, forms
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 from applications.chats.models import Chat
 # Create your views here.
@@ -94,6 +95,10 @@ class PostCancelDeleteView(LoginRequiredMixin, generic.DeleteView):
         cancel_comment = self.request.POST['comment']
         self.object = self.get_object()
 
+        postulation_cancel = models.PostulationStatus.objects.get(status="Cancelada")
+        qs = self.object.postulation_set.all()
+        qs.update(status=postulation_cancel)
+
         self.object.cancel_comment = cancel_comment
         self.object.status = cancel_status
         self.object.save()
@@ -108,6 +113,13 @@ class PostulationListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         user = self.request.user
         return models.Postulation.objects.filter(candidate=user).order_by('-created_at')
+
+class PostulationsFromPostListView(PostulationListView):
+    template_name = 'posts/postulations.html'
+
+    def get_queryset(self):
+        post = models.Post.objects.get(pk=self.kwargs['pk'])
+        return models.Postulation.objects.filter(post=post)
 
 class PostulateToPostCreateView(LoginRequiredMixin, generic.CreateView):
     model = models.Postulation
@@ -141,4 +153,27 @@ class PostulateToPostCreateView(LoginRequiredMixin, generic.CreateView):
 class PostulationDoneTemplateView(LoginRequiredMixin, generic.base.TemplateView):
     template_name = 'posts/postulations/done.html'
 
+@login_required
+def ApproveCandidateView(request, pk):
+    postulation = models.Postulation.objects.get(pk=pk)
+    post = postulation.post
 
+    approve_status = models.PostulationStatus.objects.get(status='Aprobada')
+    disapprove_status = models.PostulationStatus.objects.get(status='Desaprobada')
+    finish_status = models.PostStatus.objects.get(status='Finalizada')
+
+    if request.method == 'GET':
+        return render(request, 'posts/postulations/approve.html', {
+            'postulation': postulation
+        })
+    elif request.method == 'POST':
+        qs = post.postulation_set.all()
+        qs.update(status=disapprove_status)
+
+        post.status = finish_status
+        post.save()
+
+        postulation.status = approve_status
+        postulation.save()
+        url = reverse('users:calificate', kwargs={'slug': postulation.candidate.username})
+        return HttpResponseRedirect(url)

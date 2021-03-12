@@ -23,6 +23,7 @@ urlpatterns = [
     path("update/", views.UserProfileUpdateView.as_view(), name="update_profile"),
     path("<str:slug>/", views.UserProfileView.as_view(), name="profile"),
     path("<str:slug>/report/", views.UserReportView.as_view(), name="profile_report"),
+    path("<str:slug>/calificate", views.CalificateUserCreateView.as_view(), name="calificate"),
     path("report/done/", views.UserReportDoneView.as_view(), name="profile_report_done"),
 
     # Ajax

@@ -54,3 +54,26 @@ class UserReportForm(forms.ModelForm):
             'reason',
             'comment'
         }
+
+class CalificateUserForm(forms.ModelForm):
+    score_choices = (
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+    )
+
+    title = forms.CharField(label="Titulo", max_length=100, required=True)
+    score = forms.IntegerField(label="Puntuación", required=True, max_value=5, min_value=1, widget=forms.RadioSelect(choices=score_choices, attrs={'class':'btn-check'}))
+
+    comment = forms.CharField(label="Comentario", required=True, widget=forms.Textarea(attrs={
+        'rows':3,
+    }))
+    class Meta:
+        model = models.Qualification
+        fields = {
+            'title',
+            'score',
+            'comment',
+        }
