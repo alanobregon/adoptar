@@ -26,7 +26,7 @@
                     {% if p.status.status == 'En evaluación' %}
                       {% if p.post.author == user %}
                         <a href="{% url 'posts:approve_postulation' p.id %}">Aprobar</a>
-                        <a href="#">Desaprobar</a>
+                        <a href="{% url 'posts:disapprove_postulation' p.id %}">Desaprobar</a>
                       {% endif %}
                     {% endif %}
                   </div>

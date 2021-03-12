@@ -39,6 +39,11 @@
         <div class="d-grid gap-2">
           {% if post.get_status == 'Cancelada' %}
             <button disabled class="btn btn-danger">Publicacion cancelada</button>
+          {% elif post.get_status == 'Suspendida' %}
+            <button disabled class="btn btn-secondary">Publicacion suspendida</button>
+            {% if post.author == user %}
+              <a href="{% url 'posts:update' post.id %}" class="btn btn-outline-primary" type="button">Editar publicación</a>
+            {% endif %}
           {% elif post.get_status == 'Finalizada' %}
             <button disabled class="btn btn-success">Publicacion finalizada</button>
           {% else %}

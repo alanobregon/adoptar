@@ -27,7 +27,7 @@ class PostStatus(models.Model):
 
 class Post(models.Model):
     title = models.CharField(verbose_name="titulo", max_length=100)
-    description = models.CharField(verbose_name="descripción", max_length=5000)
+    description = models.CharField(verbose_name="descripción", max_length=3000)
     photo = models.ImageField(verbose_name="foto", upload_to="posts/%Y/%m/%d")
     status = models.ForeignKey(PostStatus, verbose_name="estado", on_delete=models.DO_NOTHING)
     category = models.ForeignKey(Category, verbose_name="categoria", on_delete=models.DO_NOTHING)
