@@ -5,7 +5,6 @@ from applications.users import models as users
 
 # Create your models here.
 class Chat(models.Model):
-    postulation = models.ForeignKey(posts.Postulation, verbose_name="postulación", on_delete=models.CASCADE)
     participants = models.ManyToManyField(users.User, verbose_name="participantes")
 
     class Meta:

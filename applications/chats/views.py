@@ -9,7 +9,6 @@ class ChatListView(LoginRequiredMixin, generic.ListView):
     model = models.Chat
     template_name = "chats/index.html"
     context_object_name = 'chats'
-    paginate_by = 10
 
     def get_queryset(self):
         return models.Chat.objects.filter(participants=self.request.user)

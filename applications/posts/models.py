@@ -1,5 +1,6 @@
 from django.db import models
 
+from applications.chats.models import Chat
 from applications.users.models import User
 from adoptar.settings.base import MEDIA_URL, STATIC_URL
 
@@ -69,6 +70,8 @@ class Postulation(models.Model):
     candidate = models.ForeignKey(User, verbose_name="candidato", on_delete=models.CASCADE, related_name="my_postulations")
     post = models.ForeignKey(Post, verbose_name="publicacion", on_delete=models.CASCADE)
     status = models.ForeignKey(PostulationStatus, verbose_name="estado", on_delete=models.DO_NOTHING)
+
+    chat = models.OneToOneField(Chat, verbose_name="chat", on_delete=models.SET_NULL, null=True, default=None, auto_created=True)
 
     comment = models.CharField(verbose_name="comentario", max_length=1000, default=None, null=True, blank=True)
     created_at = models.DateTimeField(verbose_name="creada", auto_now_add=True)

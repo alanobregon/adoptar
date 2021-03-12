@@ -4,6 +4,8 @@ from django.urls import reverse_lazy
 from . import models, forms
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from applications.chats.models import Chat
 # Create your views here.
 
 class PostListView(generic.ListView):
@@ -128,6 +130,11 @@ class PostulateToPostCreateView(LoginRequiredMixin, generic.CreateView):
         form.instance.candidate = user
         form.instance.status = evaluation
         form.instance.post = post
+
+        new_chat = Chat.objects.create()
+        new_chat.participants.set([user, post.author])
+
+        form.instance.chat = new_chat
 
         return super(PostulateToPostCreateView, self).form_valid(form)
 

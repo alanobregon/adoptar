@@ -27,6 +27,10 @@
                   <small>{{ chat.messages.all.last.sender }}</small>
                 </a>
               {% endfor %}
+            {% else %}
+              <ul class="list-group">
+                <li class="list-group-item" aria-current="true">No tienes chats</li>
+              </ul>
             {% endif %}
           </div>
         </div>
