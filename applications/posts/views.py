@@ -130,7 +130,9 @@ class PostulateToPostCreateView(LoginRequiredMixin, generic.CreateView):
     def dispatch(self, request, *args, **kwargs):
         post = models.Post.objects.get(pk=self.kwargs['pk'])
         current_user = self.request.user
-        if post.author != current_user:
+        active_status = models.PostStatus.objects.get(status="Activa")
+
+        if post.author != current_user and post.status == active_status:
             return super().dispatch(request, *args, **kwargs)
         return redirect('posts:index')
 
@@ -162,11 +164,11 @@ def ApproveCandidateView(request, pk):
     disapprove_status = models.PostulationStatus.objects.get(status='Desaprobada')
     finish_status = models.PostStatus.objects.get(status='Finalizada')
 
-    if request.method == 'GET':
+    if request.method == 'GET' and post.author == request.user:
         return render(request, 'posts/postulations/approve.html', {
             'postulation': postulation
         })
-    elif request.method == 'POST':
+    elif request.method == 'POST' and post.author == request.user:
         qs = post.postulation_set.all()
         qs.update(status=disapprove_status)
 
@@ -176,4 +178,29 @@ def ApproveCandidateView(request, pk):
         postulation.status = approve_status
         postulation.save()
         url = reverse('users:calificate', kwargs={'slug': postulation.candidate.username})
+        return HttpResponseRedirect(url)
+    else:
+        url = reverse('posts:index')
+        return HttpResponseRedirect(url)
+
+@login_required
+def DisapproveCandidateView(request, pk):
+    postulation = models.Postulation.objects.get(pk=pk)
+    post = postulation.post
+
+    disapprove_status = models.PostulationStatus.objects.get(status='Desaprobada')
+
+    if request.method == 'GET' and post.author == request.user:
+        return render(request, 'posts/postulations/disapprove.html', {
+            'postulation': postulation
+        })
+    elif request.method == 'POST' and post.author == request.user:
+
+        postulation.status = disapprove_status
+        postulation.save()
+
+        url = reverse('posts:index')
+        return HttpResponseRedirect(url)
+    else:
+        url = reverse('posts:index')
         return HttpResponseRedirect(url)

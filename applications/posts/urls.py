@@ -14,6 +14,7 @@ urlpatterns = [
     path("postulate/done", views.PostulationDoneTemplateView.as_view(), name="postulation_done"),
 
     path("postulations/<int:pk>/", views.ApproveCandidateView, name="approve_postulation"),
+    path("postulations/<int:pk>/disapprove", views.DisapproveCandidateView, name="disapprove_postulation"),
 
     path("my/", views.CurrentUserPostListView.as_view(), name="my_publications"),
     path("my/postulations", views.PostulationListView.as_view(), name="my_postulations"),

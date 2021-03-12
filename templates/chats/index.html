@@ -15,17 +15,15 @@
                 {% if chat.postulation.status.status == 'En evaluación' %}
                   <a href="{% url 'chats:details' chat.id %}" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1">{{ chat.postulation.post.title }}</h5>
+                      <h5 class="mb-1">{{ chat.postulation.post.title }} <span class="badge bg-primary">En evaluación</span></h5>
                       <small>{{ chat.messages.all.last.created_at|naturaltime }}</small>
                     </div>
 
                     {% if chat.messages.all.last %}
-                      <p class="mb-1">{{ chat.messages.all.last }}</p>
+                      <p class="mb-1">{{ chat.messages.all.last.sender }}: {{ chat.messages.all.last }}</p>
                     {% else %}
                       <small class="mb-1">¡Inicia la conversación!</small>
                     {% endif %}
-
-                    <small>{{ chat.messages.all.last.sender }}</small>
                   </a>
                 {% elif chat.postulation.status.status == 'Aprobada' %}
                   <button class="list-group-item list-group-item-action" disabled>
@@ -35,12 +33,10 @@
                     </div>
 
                     {% if chat.messages.all.last %}
-                      <p class="mb-1">{{ chat.messages.all.last }}</p>
+                      <p class="mb-1">{{ chat.messages.all.last.sender }}: {{ chat.messages.all.last }}</p>
                     {% else %}
                       <small class="mb-1">¡Inicia la conversación!</small>
                     {% endif %}
-
-                    <small>{{ chat.messages.all.last.sender }}</small>
                   </button>
                 {% elif chat.postulation.status.status == 'Desaprobada' %}
                   <button class="list-group-item list-group-item-action" disabled>
@@ -50,12 +46,10 @@
                     </div>
 
                     {% if chat.messages.all.last %}
-                      <p class="mb-1">{{ chat.messages.all.last }}</p>
+                      <p class="mb-1">{{ chat.messages.all.last.sender }}: {{ chat.messages.all.last }}</p>
                     {% else %}
                       <small class="mb-1">¡Inicia la conversación!</small>
                     {% endif %}
-
-                    <small>{{ chat.messages.all.last.sender }}</small>
                   </button>
                 {% elif chat.postulation.status.status == 'Cancelada' %}
                   <button class="list-group-item list-group-item-action" disabled>
@@ -65,12 +59,10 @@
                     </div>
 
                     {% if chat.messages.all.last %}
-                      <p class="mb-1">{{ chat.messages.all.last }}</p>
+                      <p class="mb-1">{{ chat.messages.all.last.sender }}: {{ chat.messages.all.last }}</p>
                     {% else %}
                       <small class="mb-1">¡Inicia la conversación!</small>
                     {% endif %}
-
-                    <small>{{ chat.messages.all.last.sender }}</small>
                   </button>
                 {% endif %}
               {% endfor %}
