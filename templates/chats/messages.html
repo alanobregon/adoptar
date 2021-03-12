@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}Mensajes{% endblock title %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="display-5">
+            <a href="{% url 'chats:index' %}" class="btn btn-link">
+              <i class="bi bi-arrow-left"></i>
+            </a>
+            {{ chat.postulation.post.title }}
+          </h4> <hr>
+          <div id="myMessageContainer" class="overflow-auto" style="height: 38rem;">
+            {% if chat.messages.all %}
+              {% for message in chat.messages.all %}
+                {% if message.sender == user %}
+                  <div class="alert alert-warning text-end">
+                    <h4 class="alert-heading">{{ message.sender }}</h4>
+                    {{ message }}
+                    <hr>
+                      <small class="mb-0">{{ message.created_at|naturaltime }}</small>
+                  </div>
+                {% else %}
+                  <div class="alert alert-success text-start">
+                    <h4 class="alert-heading">{{ message.sender }}</h4>
+                    {{ message }}
+                    <hr>
+                      <small class="mb-0">{{ message.created_at|naturaltime }}</small>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <div class="position-absolute top-50 start-50 translate-middle">
+                <div class="card text-center border-0" style="width: 18rem;">
+                  <div class="card-body">
+                    <h1 class="display-3">
+                      <i class="bi bi-chat-square-text"></i>
+                    </h1>
+                    <p class="card-text">Envia un mensaje</p>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div><hr>
+          <form method="post">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+              {{ form.message }}
+              <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+                <i class="bi bi-arrow-return-right"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+{% block js %}
+  <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+  <script>
+    $('#myMessageContainer').stop ().animate ({
+      scrollTop: $('#myMessageContainer')[0].scrollHeight
+    });
+  </script>
+{% endblock js %}

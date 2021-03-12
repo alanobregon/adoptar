@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block title %}Mensajes{% endblock title %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card overflow-auto" style="height: 50rem;">
+        <div class="card-body">
+          <div class="list-group">
+            {% if chats %}
+              {% for chat in chats %}
+                <a href="{% url 'chats:details' chat.id %}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ chat.postulation.post.title }}</h5>
+                    <small>{{ chat.messages.all.last.created_at|naturaltime }}</small>
+                  </div>
+
+                  {% if chat.messages.all.last %}
+                    <p class="mb-1">{{ chat.messages.all.last }}</p>
+                  {% else %}
+                    <small class="mb-1">¡Inicia la conversación!</small>
+                  {% endif %}
+
+                  <small>{{ chat.messages.all.last.sender }}</small>
+                </a>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
