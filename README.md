@@ -1,12 +1,7 @@
 # README #
 
-## Integrantes
-- Candia Sergio Eduardo
-- Diaz Augusto Facundo
-- Niemis Andrea Daiana
-- Obregón Alan Emmanuel
-- Pereyra Marcos Gabriel
-- Soto Juan Cruz
+## Autor
+- Obregón Alan
 
 ## Prerequisitos
 - git
